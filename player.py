@@ -17,3 +17,14 @@ class Player(CircleShape):
     def draw(self, screen):
         white = (255, 255, 255)
         pygame.draw.polygon(screen, white, self.triangle(), 2 )
+
+    def rotate(self, dt):
+        (PLAYER_TURN_SPEED * dt) + self.rotation
+
+    def update(self, dt):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_a]:
+            #?
+        if keys[pygame.K_d]:
+            #? 
