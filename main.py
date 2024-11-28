@@ -23,10 +23,10 @@ def main():
 
     while True:
 
-        screen.fill((1, 1, 1))
-        
         for updates in updatable:
             updates.update(dt)
+
+        screen.fill((1, 1, 1))
 
         for draws in drawable:
             draws.draw(screen)
