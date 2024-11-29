@@ -3,6 +3,7 @@ from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
+from shot import *
 
 def main():
     pygame.init()
@@ -18,14 +19,16 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock =  pygame.time.Clock()
 
-    asteroidsfield = pygame.sprite.Group()
-    asteroids_enemy = pygame.sprite.Group()
+    #asteroidsfield = pygame.sprite.Group()
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids_enemy = pygame.sprite.Group()
+    shot = pygame.sprite.Group()
     
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids_enemy, updatable, drawable)
     AsteroidField.containers = (updatable,)
+    Shot.containers = (shot, updatable, drawable)
 
     player = Player(x, y)
     #asteroids_enemy = Asteroid(x, y, ASTEROID_MAX_RADIUS) #not nessesary here, can be deleted
@@ -33,7 +36,7 @@ def main():
     
     
 
-    while True:
+    while True: # game loop, working until interrupted
 
         for updates in updatable:
             updates.update(dt)
