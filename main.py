@@ -28,7 +28,7 @@ def main():
     AsteroidField.containers = (updatable,)
 
     player = Player(x, y)
-    #asteroids_enemy = Asteroid(x, y, ASTEROID_MAX_RADIUS)
+    #asteroids_enemy = Asteroid(x, y, ASTEROID_MAX_RADIUS) #not nessesary here, can be deleted
     asteroidsfield = AsteroidField()
     
     
@@ -37,6 +37,11 @@ def main():
 
         for updates in updatable:
             updates.update(dt)
+        
+        for object in asteroids_enemy:
+            if object.check_collision(player) == True:
+                print("Game over!")
+                return
 
         screen.fill((1, 1, 1))
 
