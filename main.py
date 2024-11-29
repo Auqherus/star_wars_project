@@ -22,11 +22,14 @@ def main():
     asteroids_enemy = pygame.sprite.Group()
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
-    Player.containers = (updatable, drawable, asteroids_enemy)
+    
+    Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids_enemy, updatable, drawable)
+    AsteroidField.containers = (updatable,)
 
     player = Player(x, y)
-    asteroids_enemy = Asteroid(x, y, ASTEROID_MAX_RADIUS)
-    #asteroidsfield = AsteroidField()
+    #asteroids_enemy = Asteroid(x, y, ASTEROID_MAX_RADIUS)
+    asteroidsfield = AsteroidField()
     
     
 
