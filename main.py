@@ -41,11 +41,15 @@ def main():
         for updates in updatable:
             updates.update(dt)
         
-        for object in asteroids_enemy:
-            if object.check_collision(player) == True:
+        for enemy in asteroids_enemy:
+            for bullet in shot:
+                if bullet.check_collision(enemy) == True:
+                    bullet.kill()
+                    enemy.kill()
+            if enemy.check_collision(player) == True:
                 print("Game over!")
                 return
-
+            
         screen.fill((1, 1, 1))
 
         for draws in drawable:
