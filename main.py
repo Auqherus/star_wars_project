@@ -45,7 +45,7 @@ def main():
             for bullet in shot:
                 if bullet.check_collision(enemy) == True:
                     bullet.kill()
-                    enemy.kill()
+                    enemy.split()
             if enemy.check_collision(player) == True:
                 print("Game over!")
                 return
