@@ -1,3 +1,5 @@
+import pygame
+
 from circleshape import *
 from constants import *
 from shot import *
@@ -28,13 +30,13 @@ class Player(CircleShape):
         keys = pygame.key.get_pressed()
         
 
-        if keys[pygame.K_a]:
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.rotate(-dt)
-        if keys[pygame.K_d]:
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.rotate(dt)
-        if keys[pygame.K_w]:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.move(dt)
-        if keys[pygame.K_s]:
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.move(-dt)
         if keys[pygame.K_SPACE]: 
             if self.timer <= 0:

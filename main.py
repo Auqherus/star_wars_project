@@ -43,10 +43,10 @@ def main():
         
         for enemy in asteroids_enemy:
             for bullet in shot:
-                if bullet.check_collision(enemy) == True:
+                if bullet.check_collision(enemy):
                     bullet.kill()
                     enemy.split()
-            if enemy.check_collision(player) == True:
+            if enemy.check_collision(player):
                 print("Game over!")
                 return
             
