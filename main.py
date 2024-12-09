@@ -8,6 +8,8 @@ from shot import *
 def main():
     pygame.init()
     dt = 0
+    score = 0
+    lives = 3
 
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -40,12 +42,14 @@ def main():
 
         for updates in updatable:
             updates.update(dt)
+
         
         for enemy in asteroids_enemy:
             for bullet in shot:
                 if bullet.check_collision(enemy):
                     bullet.kill()
                     enemy.split()
+                    score += 1
             if enemy.check_collision(player):
                 print("Game over!")
                 return
@@ -58,7 +62,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-
+        player.draw_score(screen, score)
+        player.draw_lives(screen, lives)
         pygame.display.flip()
         dt = clock.tick(60)/1000
 

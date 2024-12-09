@@ -14,7 +14,7 @@ class Asteroid(CircleShape):
 
         for i in range(num_points):
             angle = math.radians(i * angle_step)
-            random_radius = radius * random.uniform(0.7, 1.3) # random radius for asteroids diffrent shapes
+            random_radius = radius * random.uniform(0.7, 1.3) # random radius for asteroids different shapes
             x = center_x + random_radius * math.cos(angle)
             y = center_y + random_radius * math.sin(angle)
             points.append((x, y))
@@ -23,7 +23,7 @@ class Asteroid(CircleShape):
 
     def draw(self, screen):
         white = (255, 255, 255)
-        #pygame.draw.circle(screen, white, self.position, self.radius, 2)
+        #pygame.draw.circle(screen, white, self.position, self.radius, 2) # unnecessary , can be deleted
         pygame.draw.polygon(screen, white, self.asteroid_shape, width=1)
 
     def update(self, dt):
