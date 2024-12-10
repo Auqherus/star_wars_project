@@ -1,4 +1,5 @@
 import os
+import pygame
 
 from constants import *
 from player import *
@@ -15,18 +16,26 @@ def draw_lives(screen, lives):
         pygame.draw.polygon(screen, white, points)
 
 
-def load_best_score():
-    if os.path.exists(BEST_SCORE):
-        with open(BEST_SCORE, 'r') as f:
-            try:
-                return int(f.read(). strip())
-            except ValueError:
-                return 0
-    return 0
+def load_best_scores():
+    try:
+        with open(BEST_SCORE, "r") as file:
+            scores = []
+            for line in file:
+                if ": " in line:
+                    name, score = line.split(": ")
+                    scores.append((name, int(score.strip())))
+            return sorted(scores, key=lambda x: x[1], reverse=True)[:5]
+    except FileNotFoundError:
+        return []
 
-def save_best_score(score):
+
+def save_best_score(name, score):
+    scores = load_best_scores()
+    scores.append((name, score))
+    scores = sorted(scores, key=lambda x: x[1], reverse=True)[:5]
     with open(BEST_SCORE, 'w') as file:
-        file.write(str(score))
+        for name, score in scores:
+            file.write(f"{name}: {score}\n")
 
 
 class Hud:
@@ -39,9 +48,71 @@ class Hud:
         score_rect = score_text.get_rect(center = (SCREEN_WIDTH // 2, 30))
         screen.blit(score_text, score_rect)
 
-    def draw_best_score(self, screen, best_score):
+    def draw_best_score(self, screen, best_player_name,  best_score):
         white = (255, 255, 255)
-        score_text = self.font.render(f"Your best score: {best_score}", True, white)
+        score_text = self.font.render(f"Best player: {best_player_name} : {best_score} ", True, white)
         score_rect = score_text.get_rect(center = (SCREEN_WIDTH // 2, 10))
         screen.blit(score_text, score_rect)
+
+    def draw_top_scores(self, screen, top_scores):
+        white = (255, 255, 255)
+        y_offset = 10
+        for i, (name, score) in enumerate(top_scores):
+            score_text = self.font.render(f"{i + 1}. {name}: {score}", True, white)
+            screen.blit(score_text, (10, y_offset))
+            y_offset += 25
+
+    def get_player_name(self):
+        pygame.font.init()  # Initialize fonts in Pygame
+
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))  # Set screen size
+        clock = pygame.time.Clock()
+
+        font = pygame.font.SysFont('Arial', 30)  # Set font
+        input_box = pygame.Rect(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2, 40)  # Rectangle for text input
+        color_inactive = pygame.Color('lightskyblue3')  # Text color when the input box is inactive
+        color_active = pygame.Color('dodgerblue2')  # Text color when the input box is active
+        color = color_inactive
+        active = False  # Initially, the input box is not active
+        text = ''  # Initial text
+
+        running = True
+        while running:
+            screen.fill((0, 0, 0))  # Fill screen with black color
+            txt_surface = font.render(text, True, color)  # Render the text
+
+            # Set the width of the input box to fit the text
+            width = max(200, txt_surface.get_width() + 10)
+            input_box.w = width
+            screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Draw the text
+            pygame.draw.rect(screen, color, input_box, 2)  # Draw the rectangle around the input box
+
+            prompt = font.render('Enter your name:', True, (255, 255, 255))  # Prompt text
+            screen.blit(prompt, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4))  # Draw prompt on the screen
+
+            pygame.display.flip()  # Update the screen
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if input_box.collidepoint(event.pos):  # Check if the input box was clicked
+                        active = True
+                        color = color_active
+                    else:
+                        active = False
+                        color = color_inactive
+                if event.type == pygame.KEYDOWN:
+                    if active:
+                        if event.key == pygame.K_RETURN:  # Submit the name when Enter is pressed
+                            running = False
+                        elif event.key == pygame.K_BACKSPACE:  # Delete a character if Backspace is pressed
+                            text = text[:-1]
+                        else:
+                            text += event.unicode  # Add new character to the text
+
+            clock.tick(30)  # Limit the frame rate
+
+        return text  # Return the entered name
+
 

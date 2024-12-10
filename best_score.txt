@@ -1,1 +1,5 @@
-9
+Orion: 39
+Max: 33
+Max: 31
+Auqherus: 23
+Auqherus: 20

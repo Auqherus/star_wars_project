@@ -1,14 +1,17 @@
+from os import name
 import pygame
 from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
 from hud import *
-
 def main():
     pygame.init()
     dt = 0
-    score = load_best_score()
+    top_scores = load_best_scores()  #
+    best_player_name, best_score = top_scores[0] if top_scores else ("No Player", 0)
+
+    score = 0
     lives = 3
 
     print("Starting asteroids!")
@@ -19,17 +22,15 @@ def main():
     y = SCREEN_HEIGHT / 2
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    clock =  pygame.time.Clock()
+    clock = pygame.time.Clock()
 
-
-    #asteroidsfield = pygame.sprite.Group()
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids_enemy = pygame.sprite.Group()
     shot = pygame.sprite.Group()
     hud = pygame.sprite.Group()
     particles = pygame.sprite.Group()
-    
+
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids_enemy, updatable, drawable)
     AsteroidField.containers = (updatable,)
@@ -38,31 +39,34 @@ def main():
 
     player = Player(x, y)
     hud = Hud()
-    #asteroids_enemy = Asteroid(x, y, ASTEROID_MAX_RADIUS) #not nessesary here, can be deleted
+    player_name = hud.get_player_name()  # Get player name from Hud
+
     asteroidsfield = AsteroidField()
 
-    while True: # game loop, working until interrupted
-
+    while True:
         for updates in updatable:
             updates.update(dt)
 
-        
         for enemy in asteroids_enemy:
             for bullet in shot:
                 if bullet.check_collision(enemy):
                     bullet.kill()
                     enemy.split(particles)
-
-                    if score > load_best_score():
-                        save_best_score(score)
-
                     score += 1
+
+                    if score > best_score:
+                        best_score = score
+                        best_player_name = player_name
 
             if enemy.check_collision(player):
                 enemy.kill()
                 lives -= 1
                 if lives == 0:
                     print("Game over!")
+
+                    if score > top_scores[-1][1] if top_scores else 0:
+                        save_best_score(player_name, score)
+                        top_scores = load_best_scores()
                     return
 
         screen.fill((1, 1, 1))
@@ -71,8 +75,11 @@ def main():
             draws.draw(screen)
 
         hud.draw_score(screen, score)
-        hud.draw_best_score(screen, score)
+        hud.draw_best_score(screen, best_player_name, best_score)
+        hud.draw_top_scores(screen, top_scores)
+
         draw_lives(screen, lives)
+
         particles.update(dt)
         particles.draw(screen)
 
@@ -81,8 +88,9 @@ def main():
                 return
 
         pygame.display.flip()
-        dt = clock.tick(60)/1000
 
+        dt = clock.tick(60) / 1000
 
 if __name__ == "__main__":
     main()
+
