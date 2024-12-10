@@ -57,21 +57,6 @@ class Player(CircleShape):
     def cooldown(self, dt):
        self.timer -= dt
 
-    def draw_score(self, screen, score):
-        white = (255, 255, 255)
-        score_text = self.font.render(f"Your score: {score}", True, white)
-        score_rect = score_text.get_rect(center = (SCREEN_WIDTH // 2, 20))
-        screen.blit(score_text, score_rect)
-
-    def draw_lives(self, screen, lives):
-
-        white = (255, 255, 255)
-        for i in range(lives):
-            x = 450 + i * (TRIANGLE_SIZE + TRIANGLE_SPACING)
-            y = 10
-            points = [(x, y), (x - TRIANGLE_SIZE // 2, y + TRIANGLE_SIZE), (x + TRIANGLE_SIZE // 2, y + TRIANGLE_SIZE)]
-            pygame.draw.polygon(screen, white, points)
-
 
 
 

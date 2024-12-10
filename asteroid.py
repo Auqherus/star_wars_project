@@ -1,5 +1,6 @@
 from circleshape import *
 from constants import *
+from particle import Particle
 import math
 import random
 
@@ -30,8 +31,14 @@ class Asteroid(CircleShape):
         self.position += (self.velocity * dt)
         self.asteroid_shape = [(x + self.velocity.x * dt, y + self.velocity.y * dt) for x, y in self.asteroid_shape]
 
-    def split(self):
+    def split(self, particle_group):
+        white = (255, 255, 255)
         self.kill()
+
+        for _ in range(10):
+            particle = Particle(self.position, white)
+            particle_group.add(particle)
+
         if self.radius <= ASTEROID_MIN_RADIUS:
             return
         else:
