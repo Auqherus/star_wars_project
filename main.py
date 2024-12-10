@@ -8,7 +8,7 @@ from hud import *
 def main():
     pygame.init()
     dt = 0
-    score = 0
+    score = load_best_score()
     lives = 3
 
     print("Starting asteroids!")
@@ -20,6 +20,7 @@ def main():
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock =  pygame.time.Clock()
+
 
     #asteroidsfield = pygame.sprite.Group()
     updatable = pygame.sprite.Group()
@@ -51,6 +52,10 @@ def main():
                 if bullet.check_collision(enemy):
                     bullet.kill()
                     enemy.split(particles)
+
+                    if score > load_best_score():
+                        save_best_score(score)
+
                     score += 1
 
             if enemy.check_collision(player):
@@ -66,6 +71,7 @@ def main():
             draws.draw(screen)
 
         hud.draw_score(screen, score)
+        hud.draw_best_score(screen, score)
         draw_lives(screen, lives)
         particles.update(dt)
         particles.draw(screen)
