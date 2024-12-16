@@ -1,5 +1,5 @@
+Auqherus: 186
+Max: 61
 Orion: 39
+Auqherus: 36
 Max: 33
-Max: 31
-Auqherus: 23
-Auqherus: 20
