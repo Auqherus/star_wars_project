@@ -74,7 +74,7 @@ class Hud:
         color_active = pygame.Color('dodgerblue2')  # Text color when the input box is active
         color = color_inactive
         active = False  # Initially, the input box is not active
-        text = ''  # Initial text
+        text = ''  
 
         running = True
         while running:
@@ -111,7 +111,7 @@ class Hud:
                         else:
                             text += event.unicode  # Add new character to the text
 
-            clock.tick(30)  # Limit the frame rate
+            clock.tick(30) 
 
         return text  # Return the entered name
 
