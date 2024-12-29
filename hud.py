@@ -10,7 +10,7 @@ def draw_lives(screen, lives):
 
     white = (255, 255, 255)
     for i in range(lives):
-        x = 400 + i * (TRIANGLE_SIZE + TRIANGLE_SPACING)
+        x = 450 + i * (TRIANGLE_SIZE + TRIANGLE_SPACING)
         y = 10
         points = [(x, y), (x - TRIANGLE_SIZE // 2, y + TRIANGLE_SIZE), (x + TRIANGLE_SIZE // 2, y + TRIANGLE_SIZE)]
         pygame.draw.polygon(screen, white, points)
@@ -112,7 +112,7 @@ class Hud:
                     if active:
                         if event.key == pygame.K_RETURN:  # Submit the name when Enter is pressed
                             if text.strip() == "":  # Check if input is empty
-                                error_message = "Error: Ther is no input text!"
+                                error_message = "Error: Name cannot be empty!"
                             elif not text.isalpha():  # Check if the input is valid (only letters)
                                 error_message = "Error: Only letters are allowed!"
                             else:
@@ -126,6 +126,5 @@ class Hud:
             clock.tick(30)  # Limit the frame rate
 
         return text  # Return the entered name
-
 
 
