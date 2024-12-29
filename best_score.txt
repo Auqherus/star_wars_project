@@ -1,5 +1,5 @@
 Auqherus: 186
+Rex: 71
 Max: 61
+: 41
 Orion: 39
-Auqherus: 36
-Max: 33

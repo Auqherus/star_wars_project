@@ -1,6 +1,6 @@
 import os
 import pygame
-
+import sys
 from constants import *
 from player import *
 from circleshape import *
@@ -10,7 +10,7 @@ def draw_lives(screen, lives):
 
     white = (255, 255, 255)
     for i in range(lives):
-        x = 450 + i * (TRIANGLE_SIZE + TRIANGLE_SPACING)
+        x = 400 + i * (TRIANGLE_SIZE + TRIANGLE_SPACING)
         y = 10
         points = [(x, y), (x - TRIANGLE_SIZE // 2, y + TRIANGLE_SIZE), (x + TRIANGLE_SIZE // 2, y + TRIANGLE_SIZE)]
         pygame.draw.polygon(screen, white, points)
@@ -75,6 +75,7 @@ class Hud:
         color = color_inactive
         active = False  # Initially, the input box is not active
         text = ''  # Initial text
+        error_message = ""  # To store the error message
 
         running = True
         while running:
@@ -87,14 +88,19 @@ class Hud:
             screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Draw the text
             pygame.draw.rect(screen, color, input_box, 2)  # Draw the rectangle around the input box
 
-            prompt = font.render('Enter your name:', True, (255, 255, 255))  # Prompt text
+            prompt = font.render('Enter your name:', True, (255, 255, 255))
             screen.blit(prompt, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4))  # Draw prompt on the screen
+
+            if error_message:  # If there's an error, display it
+                error_msg = font.render(error_message, True, (255, 0, 0))
+                screen.blit(error_msg, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 8))  # Draw error message
 
             pygame.display.flip()  # Update the screen
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    pygame.quit()
+                    sys.exit()  # Exit program if user closes the window
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if input_box.collidepoint(event.pos):  # Check if the input box was clicked
                         active = True
@@ -105,14 +111,21 @@ class Hud:
                 if event.type == pygame.KEYDOWN:
                     if active:
                         if event.key == pygame.K_RETURN:  # Submit the name when Enter is pressed
-                            running = False
+                            if text.strip() == "":  # Check if input is empty
+                                error_message = "Error: Ther is no input text!"
+                            elif not text.isalpha():  # Check if the input is valid (only letters)
+                                error_message = "Error: Only letters are allowed!"
+                            else:
+                                return text  # Valid input, return name
                         elif event.key == pygame.K_BACKSPACE:  # Delete a character if Backspace is pressed
                             text = text[:-1]
+                            error_message = ""  # Clear the error message
                         else:
                             text += event.unicode  # Add new character to the text
 
             clock.tick(30)  # Limit the frame rate
 
         return text  # Return the entered name
+
 
 

@@ -58,9 +58,11 @@ def main():
                         best_score = score
                         best_player_name = player_name
 
-            if enemy.check_collision(player):
+            if enemy.check_collision(player) and not player.invincible:
                 enemy.kill()
                 lives -= 1
+                player.explode(particles)
+
                 if lives == 0:
                     print("Game over!")
 
