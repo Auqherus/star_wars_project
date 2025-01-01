@@ -1,5 +1,5 @@
-Auqherus: 186
-Rex: 71
-Max: 61
-: 41
-Orion: 39
+Test: 32
+Testuje: 18
+Test: 13
+Test: 9
+Player: 0

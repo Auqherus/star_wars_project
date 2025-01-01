@@ -12,6 +12,7 @@ def main():
     best_player_name, best_score = top_scores[0] if top_scores else ("No Player", 0)
 
     score = 0
+    best_score = 0
     lives = 3
 
     print("Starting asteroids!")
@@ -64,11 +65,11 @@ def main():
                 player.explode(particles)
 
                 if lives == 0:
-                    print("Game over!")
-
                     if score > top_scores[-1][1] if top_scores else 0:
                         save_best_score(player_name, score)
                         top_scores = load_best_scores()
+                    print("Game over!")
+
                     return
 
         screen.fill((1, 1, 1))

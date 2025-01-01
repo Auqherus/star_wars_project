@@ -65,7 +65,7 @@ class Hud:
     def get_player_name(self):
         pygame.font.init()  # Initialize fonts in Pygame
 
-        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))  # Set screen size
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) 
         clock = pygame.time.Clock()
 
         font = pygame.font.SysFont('Arial', 30)  # Set font
@@ -111,9 +111,9 @@ class Hud:
                 if event.type == pygame.KEYDOWN:
                     if active:
                         if event.key == pygame.K_RETURN:  # Submit the name when Enter is pressed
-                            if text.strip() == "":  # Check if input is empty
+                            if text.strip() == "": 
                                 error_message = "Error: Name cannot be empty!"
-                            elif not text.isalpha():  # Check if the input is valid (only letters)
+                            elif not text.isalpha():  
                                 error_message = "Error: Only letters are allowed!"
                             else:
                                 return text  # Valid input, return name
@@ -123,7 +123,7 @@ class Hud:
                         else:
                             text += event.unicode  # Add new character to the text
 
-            clock.tick(30)  # Limit the frame rate
+            clock.tick(30)  
 
         return text  # Return the entered name
 
