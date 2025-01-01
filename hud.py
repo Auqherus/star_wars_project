@@ -21,14 +21,16 @@ def load_best_scores():
         with open(BEST_SCORE, "r") as file:
             scores = []
             if not scores:
-                scores = [("NoPlayer ", 0)]
+                for _ in range(5):
+                    score = ("Player", 0)
+                    scores.append(score)
             for line in file:
                 if ": " in line:
                     name, score = line.split(": ")
                     scores.append((name, int(score.strip())))
             return sorted(scores, key=lambda x: x[1], reverse=True)[:5]
     except FileNotFoundError:
-        return ["Player: None", "Score: 0"]
+        return [("Player", 0), ("Player", 0), ("Player", 0), ("Player", 0), ("Player", 0)]
 
 
 def save_best_score(name, score):
