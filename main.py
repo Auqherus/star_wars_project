@@ -8,11 +8,10 @@ from hud import *
 def main():
     pygame.init()
     dt = 0
-    top_scores = load_best_scores()  #
+    top_scores = load_best_scores()
     best_player_name, best_score = top_scores[0] if top_scores else ("No Player", 0)
 
     score = 0
-    best_score = 0
     lives = 3
 
     print("Starting asteroids!")
