@@ -5,6 +5,8 @@ from player import *
 from asteroid import *
 from asteroidfield import *
 from hud import *
+from startscreen import *
+
 def main():
     pygame.init()
     dt = 0
@@ -30,15 +32,19 @@ def main():
     shot = pygame.sprite.Group()
     hud = pygame.sprite.Group()
     particles = pygame.sprite.Group()
+    startscreen = pygame.sprite.Group()
 
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids_enemy, updatable, drawable)
     AsteroidField.containers = (updatable,)
     Shot.containers = (shot, updatable, drawable)
     Hud.containers = (hud, updatable, drawable)
+    StartScreen.containers = (startscreen, updatable, drawable)
 
     player = Player(x, y)
+    startscreen = StartScreen()
     hud = Hud()
+    start_screen = startscreen.display()
     player_name = hud.get_player_name()  # Get player name from Hud
 
     asteroidsfield = AsteroidField()
