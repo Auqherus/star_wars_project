@@ -61,8 +61,6 @@ class Hud:
     def draw_top_scores(self, screen, top_scores):
         white = (255, 255, 255)
         y_offset = 10
-        top_score_text = self.font.render(f"Top 5 best players", True, white)
-        screen.blit(top_score_text, (10, 30))
         for i, (name, score) in enumerate(top_scores):
             score_text = self.font.render(f"{i + 1}. {name}: {score}", True, white)
             screen.blit(score_text, (10, y_offset))
@@ -75,7 +73,7 @@ class Hud:
         clock = pygame.time.Clock()
 
         font = pygame.font.SysFont('Arial', 30)  # Set font
-        input_box = pygame.Rect(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2, 40)  # Rectangle for text input
+        input_box = pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, 40)  # Rectangle for text input
         color_inactive = pygame.Color('lightskyblue3')  # Text color when the input box is inactive
         color_active = pygame.Color('dodgerblue2')  # Text color when the input box is active
         color = color_inactive
@@ -85,7 +83,7 @@ class Hud:
 
         running = True
         while running:
-            screen.fill((0, 0, 0))  # Fill screen with black color
+            screen.fill((0, 0, 0)) # black
             txt_surface = font.render(text, True, color)  # Render the text
 
             # Set the width of the input box to fit the text

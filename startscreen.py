@@ -30,11 +30,10 @@ class StartScreen:
         while running:
             screen.fill((0, 0, 0))
 
-            # Renderuj tytuł
             title = font_title.render('Asteroids the Game', True, (255, 255, 255))
             screen.blit(title, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 10))
 
-            # Renderuj opcje menu z wskaźnikiem
+            # Menu with arrow pointer
             for i, option in enumerate(self.options):
                 color = (255, 255, 255) if i == self.selected_option else (150, 150, 150)
                 text = font.render(option, True, color)
@@ -42,28 +41,27 @@ class StartScreen:
                 y = SCREEN_HEIGHT / 4.5 + i * 40
                 screen.blit(text, (x, y))
 
-                # Dodaj wskaźnik strzałki
+                # add arrow pointer
                 if i == self.selected_option:
                     arrow = font.render("->", True, (255, 255, 255))
                     screen.blit(arrow, (x - 30, y))
 
-            # Obsługa zdarzeń
+        
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()  # Exit program if user closes the window
 
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_DOWN:  # Strzałka w dół
+                    if event.key == pygame.K_DOWN:  # arrow down
                         self.selected_option = (self.selected_option + 1) % len(self.options)
 
-                    elif event.key == pygame.K_UP:  # Strzałka w górę
+                    elif event.key == pygame.K_UP:  # arrow up
                         self.selected_option = (self.selected_option - 1) % len(self.options)
 
-                    elif event.key == pygame.K_RETURN:  # Klawisz Enter
+                    elif event.key == pygame.K_RETURN:  # Enter
 
                         if self.selected_option == 0:
-                            self.name.get_player_name()
                             return
                         elif self.selected_option == 1:
                             print("Scores selected!")
@@ -73,6 +71,6 @@ class StartScreen:
                             pygame.quit()
                             sys.exit()
 
-            pygame.display.flip()  # Update the screen
+            pygame.display.flip()
             clock.tick(30)
 

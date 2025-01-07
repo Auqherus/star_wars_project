@@ -1,5 +1,5 @@
+Orion: 51
+Orion: 31
 Sd: 15
-Player: 0
-Player: 0
 Player: 0
 Player: 0
