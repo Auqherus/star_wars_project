@@ -1,9 +1,6 @@
-import os
-import pygame
 import sys
-from constants import *
-from player import *
-from circleshape import *
+import pygame
+from constants import TRIANGLE_SIZE, TRIANGLE_SPACING, BEST_SCORE, SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 def draw_lives(screen, lives):
@@ -69,7 +66,7 @@ class Hud:
     def get_player_name(self):
         pygame.font.init()  # Initialize fonts in Pygame
 
-        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) 
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         clock = pygame.time.Clock()
 
         font = pygame.font.SysFont('Arial', 30)  # Set font
@@ -83,7 +80,7 @@ class Hud:
 
         running = True
         while running:
-            screen.fill((0, 0, 0)) # black
+            screen.fill((1, 1, 1))  # black
             txt_surface = font.render(text, True, color)  # Render the text
 
             # Set the width of the input box to fit the text
@@ -98,6 +95,7 @@ class Hud:
             if error_message:  # If there's an error, display it
                 error_msg = font.render(error_message, True, (255, 0, 0))
                 screen.blit(error_msg, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 8))  # Draw error message
+
 
             pygame.display.flip()  # Update the screen
 
@@ -115,9 +113,9 @@ class Hud:
                 if event.type == pygame.KEYDOWN:
                     if active:
                         if event.key == pygame.K_RETURN:  # Submit the name when Enter is pressed
-                            if text.strip() == "": 
+                            if text.strip() == "":
                                 error_message = "Error: Name cannot be empty!"
-                            elif not text.isalpha():  
+                            elif not text.isalpha():
                                 error_message = "Error: Only letters are allowed!"
                             else:
                                 return text  # Valid input, return name
@@ -127,7 +125,7 @@ class Hud:
                         else:
                             text += event.unicode  # Add new character to the text
 
-            clock.tick(30)  
+            clock.tick(30)
 
         return text  # Return the entered name
 

@@ -1,13 +1,12 @@
-from os import name
-import pygame
-from constants import *
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 from player import *
-from asteroid import *
-from asteroidfield import *
-from hud import *
 from startscreen import *
+import os
+
 
 def main():
+    os.environ['SDL_VIDEO_CENTERED'] = '1'
     pygame.init()
     dt = 0
     top_scores = load_best_scores()
