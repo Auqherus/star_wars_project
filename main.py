@@ -3,6 +3,7 @@ from asteroidfield import AsteroidField
 from player import *
 from startscreen import *
 import os
+import pygame
 
 
 def main():
@@ -45,10 +46,10 @@ def main():
     hud = Hud()
     start_screen = mainmenu.display()
     player_name = hud.get_player_name()  # Get player name from Hud
-
     asteroidsfield = AsteroidField()
+    isGameRunning = True
 
-    while True:
+    while isGameRunning:
         for updates in updatable:
             updates.update(dt)
 
@@ -93,6 +94,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    hud.pause_game(screen)
+                    #isGameRunning = False
+                    #if event.key == pygame.K_ESCAPE:
+                        #isGameRunning = True
 
         pygame.display.flip()
 

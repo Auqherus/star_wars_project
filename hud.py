@@ -42,6 +42,7 @@ def save_best_score(name, score):
 class Hud:
     def __init__(self):
         self.font = pygame.font.SysFont('Arial', 20)
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     def draw_score(self, screen, score):
         white = (255, 255, 255)
@@ -62,11 +63,32 @@ class Hud:
             score_text = self.font.render(f"{i + 1}. {name}: {score}", True, white)
             screen.blit(score_text, (10, y_offset))
             y_offset += 25
+    
+    def pause_game(self, screen):
+        current_width, current_height = pygame.display.get_window_size()
+        white = (255, 255, 255)
+        paused = True
+        font = pygame.font.Font(None, 45)
+        pause_text = font.render("Paused", True, white)
+        pause_rect = pause_text.get_rect(center=(current_width /2, current_height / 2))
+
+        while paused:
+            
+            self.screen.fill((1, 1, 1))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused = False
+            
+            self.screen.blit(pause_text, pause_rect)
+            pygame.display.flip()
+
 
     def get_player_name(self):
         pygame.font.init()  # Initialize fonts in Pygame
-
-        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         clock = pygame.time.Clock()
 
         font = pygame.font.SysFont('Arial', 30)  # Set font
@@ -80,21 +102,21 @@ class Hud:
 
         running = True
         while running:
-            screen.fill((1, 1, 1))  # black
+            self.screen.fill((1, 1, 1))  # black
             txt_surface = font.render(text, True, color)  # Render the text
 
             # Set the width of the input box to fit the text
             width = max(200, txt_surface.get_width() + 10)
             input_box.w = width
-            screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Draw the text
-            pygame.draw.rect(screen, color, input_box, 2)  # Draw the rectangle around the input box
+            self.screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Draw the text
+            pygame.draw.rect(self.screen, color, input_box, 2)  # Draw the rectangle around the input box
 
             prompt = font.render('Enter your name:', True, (255, 255, 255))
-            screen.blit(prompt, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4))  # Draw prompt on the screen
+            self.screen.blit(prompt, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4))  # Draw prompt on the screen
 
             if error_message:  # If there's an error, display it
                 error_msg = font.render(error_message, True, (255, 0, 0))
-                screen.blit(error_msg, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 8))  # Draw error message
+                self.screen.blit(error_msg, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 8))  # Draw error message
 
 
             pygame.display.flip()  # Update the screen
