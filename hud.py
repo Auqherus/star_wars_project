@@ -43,6 +43,8 @@ class Hud:
     def __init__(self):
         self.font = pygame.font.SysFont('Arial', 20)
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.options = ["main menu", "exit"]
+        self.selected_option = 0
 
     def draw_score(self, screen, score):
         white = (255, 255, 255)
@@ -75,13 +77,43 @@ class Hud:
         while paused:
             
             self.screen.fill((1, 1, 1))
+
+            # Render the menu options dynamically
+            for i, option in enumerate(self.options):
+                color = (255, 255, 255) if i == self.selected_option else (150, 150, 150)
+                text = font.render(option, True, color)
+                text_rect = text.get_rect(center=(current_width / 2, current_height / 2.5 + i * 40))
+                screen.blit(text, text_rect.topleft)
+
+                # Render the arrow pointer dynamically
+                if i == self.selected_option:
+                    arrow = font.render("->", True, (255, 255, 255))
+                    arrow_rect = arrow.get_rect(center=(text_rect.left - 20, text_rect.centery))
+                    screen.blit(arrow, arrow_rect.topleft)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.KEYDOWN:
+
+                elif event.type == pygame.KEYDOWN:
+
                     if event.key == pygame.K_ESCAPE:
                         paused = False
+
+                    if event.key == pygame.K_DOWN:  # arrow down
+                        self.selected_option = (self.selected_option + 1) % len(self.options)
+
+                    elif event.key == pygame.K_UP:  # arrow up
+                        self.selected_option = (self.selected_option - 1) % len(self.options)
+
+                    elif event.key == pygame.K_RETURN:  # Enter
+                        if self.selected_option == 0:
+                            return
+                        elif self.selected_option == 1:
+                            print("Scores selected!")
+                            pygame.quit()
+                            sys.exit()
             
             self.screen.blit(pause_text, pause_rect)
             pygame.display.flip()
