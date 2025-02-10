@@ -109,7 +109,7 @@ class Hud:
 
                     elif event.key == pygame.K_RETURN:  # Enter
                         if self.selected_option == 0:
-                            continue   # HOW TO MAKE IT TO GO BACK TO MAIN MENU SCREEN?
+                            continue   # HOW TO MAKE IT TO GO BACK TO MAIN MENU SCREEN? edit: I can set state of the game in main.py
                         elif self.selected_option == 1:
                             pygame.quit()
                             sys.exit()
