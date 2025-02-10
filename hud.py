@@ -109,9 +109,8 @@ class Hud:
 
                     elif event.key == pygame.K_RETURN:  # Enter
                         if self.selected_option == 0:
-                            return
+                            continue   # HOW TO MAKE IT TO GO BACK TO MAIN MENU SCREEN?
                         elif self.selected_option == 1:
-                            print("Scores selected!")
                             pygame.quit()
                             sys.exit()
             
