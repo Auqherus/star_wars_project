@@ -67,6 +67,7 @@ class Hud:
             y_offset += 25
     
     def pause_game(self, screen):
+        clock = pygame.time.Clock()
         current_width, current_height = pygame.display.get_window_size()
         white = (255, 255, 255)
         paused = True
@@ -116,6 +117,7 @@ class Hud:
             
             self.screen.blit(pause_text, pause_rect)
             pygame.display.flip()
+            clock.tick(15)
 
 
     def get_player_name(self):
@@ -178,7 +180,7 @@ class Hud:
                         else:
                             text += event.unicode  # Add new character to the text
 
-            clock.tick(30)
+            clock.tick(15)
 
         return text  # Return the entered name
 
