@@ -2,6 +2,7 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from player import *
 from startscreen import *
+from constants import GAME_STATUS_STOP
 import os
 import pygame
 
@@ -74,8 +75,7 @@ def main():
                         save_best_score(player_name, score)
                         top_scores = load_best_scores()
                     print("Game over!")
-
-                    return
+                    reset_game() # Have to check this part yet
 
         screen.fill((1, 1, 1))
 
@@ -98,11 +98,19 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     hud.pause_game(screen)
                     dt = clock.tick(0)
+                    if GAME_STATUS_STOP:
+                        reset_game()
+
 
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000
 
+def reset_game():
+    main()
+
 if __name__ == "__main__":
     main()
+
+
 

@@ -1,5 +1,5 @@
+Sad: 63
 SD: 59
 Orion: 51
+sd: 42
 Sd: 33
-Orion: 31
-sd: 18
