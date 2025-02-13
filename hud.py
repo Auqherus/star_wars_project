@@ -1,6 +1,6 @@
 import sys
 import pygame
-from constants import TRIANGLE_SIZE, TRIANGLE_SPACING, BEST_SCORE, SCREEN_WIDTH, SCREEN_HEIGHT, GAME_STATUS_STOP
+from constants import TRIANGLE_SIZE, TRIANGLE_SPACING, BEST_SCORE, SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 def draw_lives(screen, lives):

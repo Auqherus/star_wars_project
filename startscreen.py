@@ -63,6 +63,7 @@ class StartScreen:
                             return
                         elif self.selected_option == 1:
                             print("Scores selected!") # Place to set up a state for a game in main.py, like state_game = paused, scores ect.
+                            return
                         elif self.selected_option == 2:
                             pygame.quit()
                             sys.exit()
