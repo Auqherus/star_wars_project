@@ -2,14 +2,15 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from player import *
 from startscreen import *
-from constants import GAME_STATUS_STOP
 import os
 import pygame
 
+pygame.init()
+os.environ['SDL_VIDEO_CENTERED'] = '1'
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+clock = pygame.time.Clock()
+def game_loop():
 
-def main():
-    os.environ['SDL_VIDEO_CENTERED'] = '1'
-    pygame.init()
     dt = 0
     top_scores = load_best_scores()
     best_player_name, best_score = top_scores[0] if top_scores else ("No Player", 0)
@@ -23,9 +24,6 @@ def main():
 
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
-
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    clock = pygame.time.Clock()
 
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
@@ -45,7 +43,10 @@ def main():
     player = Player(x, y)
     mainmenu = StartScreen()
     hud = Hud()
-    start_screen = mainmenu.display()
+    mainscreen = mainmenu.display()
+    start_screen = StartScreen()
+
+
     player_name = hud.get_player_name()  # Get player name from Hud
     asteroidsfield = AsteroidField()
     is_game_running = True
@@ -53,6 +54,7 @@ def main():
     while is_game_running:
         for updates in updatable:
             updates.update(dt)
+            top_scores = load_best_scores()
 
         for enemy in asteroids_enemy:
             for bullet in shot:
@@ -75,7 +77,7 @@ def main():
                         save_best_score(player_name, score)
                         top_scores = load_best_scores()
                     print("Game over!")
-                    reset_game() # Have to check this part yet
+                    return
 
         screen.fill((1, 1, 1))
 
@@ -96,18 +98,15 @@ def main():
                 return
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    hud.pause_game(screen)
-                    dt = clock.tick(0)
-                    if GAME_STATUS_STOP:
-                        reset_game()
-
+                    if hud.pause_game(screen):
+                        return  #esc to main menu
 
         pygame.display.flip()
-
         dt = clock.tick(60) / 1000
 
-def reset_game():
-    main()
+def main():
+    while True:
+        game_loop()
 
 if __name__ == "__main__":
     main()

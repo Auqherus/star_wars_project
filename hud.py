@@ -1,6 +1,6 @@
 import sys
 import pygame
-from constants import TRIANGLE_SIZE, TRIANGLE_SPACING, BEST_SCORE, SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import TRIANGLE_SIZE, TRIANGLE_SPACING, BEST_SCORE, SCREEN_WIDTH, SCREEN_HEIGHT, GAME_STATUS_STOP
 
 
 def draw_lives(screen, lives):
@@ -39,6 +39,17 @@ def save_best_score(name, score):
             file.write(f"{name}: {score}\n")
 
 
+def screen_settings():
+
+    current_width, current_height = pygame.display.get_window_size()
+    white = (255, 255, 255)
+    clock = pygame.time.Clock()
+    font = pygame.font.Font(None, 45)
+    pause_text = font.render("Paused", True, white)
+    pause_rect = pause_text.get_rect(center=(current_width / 2, current_height / 2))
+    return pause_text, pause_rect, current_width, current_height, clock, font
+
+
 class Hud:
     def __init__(self):
         self.font = pygame.font.SysFont('Arial', 20)
@@ -65,15 +76,12 @@ class Hud:
             score_text = self.font.render(f"{i + 1}. {name}: {score}", True, white)
             screen.blit(score_text, (10, y_offset))
             y_offset += 25
-    
+
     def pause_game(self, screen):
-        clock = pygame.time.Clock()
-        current_width, current_height = pygame.display.get_window_size()
-        white = (255, 255, 255)
+
+        pause_text, pause_rect, current_width, current_height, clock, font = screen_settings()
+        screen.blit(pause_text, pause_rect)
         paused = True
-        font = pygame.font.Font(None, 45)
-        pause_text = font.render("Paused", True, white)
-        pause_rect = pause_text.get_rect(center=(current_width /2, current_height / 2))
 
         while paused:
             
@@ -96,21 +104,19 @@ class Hud:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-
                 elif event.type == pygame.KEYDOWN:
-
                     if event.key == pygame.K_ESCAPE:
                         paused = False
-
+                        return False
                     if event.key == pygame.K_DOWN:  # arrow down
                         self.selected_option = (self.selected_option + 1) % len(self.options)
-
                     elif event.key == pygame.K_UP:  # arrow up
                         self.selected_option = (self.selected_option - 1) % len(self.options)
-
                     elif event.key == pygame.K_RETURN:  # Enter
                         if self.selected_option == 0:
-                            return
+                            print("GAME_STATUS_STOP == True")
+                            paused = False
+                            return True
                         elif self.selected_option == 1:
                             pygame.quit()
                             sys.exit()
@@ -119,11 +125,9 @@ class Hud:
             pygame.display.flip()
             clock.tick(15)
 
-
     def get_player_name(self):
         pygame.font.init()  # Initialize fonts in Pygame
         clock = pygame.time.Clock()
-
         font = pygame.font.SysFont('Arial', 30)  # Set font
         input_box = pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, 40)  # Rectangle for text input
         color_inactive = pygame.Color('lightskyblue3')  # Text color when the input box is inactive
@@ -183,5 +187,3 @@ class Hud:
             clock.tick(15)
 
         return text  # Return the entered name
-
-

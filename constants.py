@@ -16,4 +16,4 @@ TRIANGLE_SPACING = 10
 BEST_SCORE = "best_score.txt"
 
 #Game Status
-GAME_STATUS_STOP = True
+GAME_STATUS_STOP = False
