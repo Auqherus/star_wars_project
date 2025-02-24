@@ -46,8 +46,9 @@ def screen_settings():
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 45)
     pause_text = font.render("Paused", True, white)
+    game_over_text = font.render("Game Over", True, white)
     pause_rect = pause_text.get_rect(center=(current_width / 2, current_height / 2))
-    return pause_text, pause_rect, current_width, current_height, clock, font
+    return pause_text, pause_rect, current_width, current_height, clock, font, game_over_text
 
 
 class Hud:
@@ -79,7 +80,7 @@ class Hud:
 
     def pause_game(self, screen):
 
-        pause_text, pause_rect, current_width, current_height, clock, font = screen_settings()
+        pause_text, pause_rect, current_width, current_height, clock, font, game_over_text = screen_settings()
         screen.blit(pause_text, pause_rect)
         paused = True
 
@@ -124,6 +125,39 @@ class Hud:
             self.screen.blit(pause_text, pause_rect)
             pygame.display.flip()
             clock.tick(15)
+
+    def death_screen(self):
+        pause_text, pause_rect, current_width, current_height, clock, font, game_over_text = screen_settings()
+        blink_interval = 500
+        last_toggle_time = pygame.time.get_ticks()
+        show_text = True
+        game_over = False
+
+        while not game_over:
+            self.screen.fill((1, 1, 1))  # screen clearance
+
+            # Time update
+            current_time = pygame.time.get_ticks()
+
+            # Blinking of text
+            if current_time - last_toggle_time >= blink_interval:
+                show_text = not show_text
+                last_toggle_time = current_time
+
+            if show_text:
+                self.screen.blit(game_over_text, pause_rect)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        game_over = True
+                        return
+
+            pygame.display.flip()
+            clock.tick(60)
 
     def get_player_name(self):
         pygame.font.init()  # Initialize fonts in Pygame

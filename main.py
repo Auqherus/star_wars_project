@@ -56,6 +56,8 @@ def game_loop():
             updates.update(dt)
             top_scores = load_best_scores()
 
+
+
         for enemy in asteroids_enemy:
             for bullet in shot:
                 if bullet.check_collision(enemy):
@@ -75,7 +77,7 @@ def game_loop():
                 if lives == 0:
                     if score > top_scores[-1][1] if top_scores else 0:
                         save_best_score(player_name, score)
-                        top_scores = load_best_scores()
+                    hud.death_screen()
                     print("Game over!")
                     return
 
