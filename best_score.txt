@@ -1,5 +1,5 @@
-Xer: 24
-Sd: 15
-Sd: 10
-Xer: 10
-Xd: 9
+Victory: 37
+Player: 0
+Player: 0
+Player: 0
+Player: 0

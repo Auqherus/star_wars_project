@@ -2,11 +2,11 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from player import *
 from startscreen import *
-import os
+#import os
 import pygame
 
 pygame.init()
-os.environ['SDL_VIDEO_CENTERED'] = '1'
+#os.environ['SDL_VIDEO_CENTERED'] = '1'
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 def game_loop():
@@ -51,6 +51,13 @@ def game_loop():
     asteroidsfield = AsteroidField()
     is_game_running = True
 
+    top_scores = load_best_scores()
+    best_player_name, best_score = top_scores[0] if top_scores else ("No Player", 0)
+
+    if best_player_name == "Player": # to reset best player score
+        best_score = 0
+
+
     while is_game_running:
         for updates in updatable:
             updates.update(dt)
@@ -65,7 +72,7 @@ def game_loop():
                     enemy.split(particles)
                     score += 1
 
-                    if score > best_score:
+                    if score > best_score: # for top 1. player with best score
                         best_score = score
                         best_player_name = player_name
 
@@ -76,9 +83,9 @@ def game_loop():
 
                 if lives == 0:
                     if score > top_scores[-1][1] if top_scores else 0:
-                        save_best_score(player_name, score)
+                        save_best_score(player_name, score) # update best score after game is over
+
                     hud.death_screen()
-                    print("Game over!")
                     return
 
         screen.fill((1, 1, 1))

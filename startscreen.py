@@ -2,10 +2,8 @@ import os
 import sys
 import pygame
 
-import hud
 from hud import *
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
-from main import game_loop
 
 
 class StartScreen:
@@ -60,8 +58,8 @@ class StartScreen:
             if r_pressed_time and pygame.time.get_ticks() - r_pressed_time >= 3000:
                 # Reset Scores
                 with open(BEST_SCORE, "w") as file:
-                    file.write("")
-                #top_scores = [("Player", 0) for _ in range(5)]  # Update local scores
+                    for _ in range(5):
+                        file.write("Player: 0\n")
                 top_scores = load_best_scores()
                 r_pressed_time = None  # Reset of time, which 'R' was pressed
 
