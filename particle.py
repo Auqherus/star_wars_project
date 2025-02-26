@@ -8,11 +8,11 @@ class Particle(pygame.sprite.Sprite):
         self.image.fill(color)
         self.rect = self.image.get_rect(center=position)
         self.velocity = pygame.Vector2(random.uniform(-3, 3), random.uniform(-3, 3))
-        self.lifetime = lifetime
+        self.lifetime = max(lifetime, 0)
 
     def update(self, dt):
         self.rect.x += self.velocity.x
         self.rect.y += self.velocity.y
-        self.lifetime -= dt
+        self.lifetime = max(self.lifetime - dt, 0)
         if self.lifetime <= 0:
             self.kill()

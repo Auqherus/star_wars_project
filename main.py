@@ -29,7 +29,6 @@ def game_loop():
     drawable = pygame.sprite.Group()
     asteroids_enemy = pygame.sprite.Group()
     shot = pygame.sprite.Group()
-    hud = pygame.sprite.Group()
     particles = pygame.sprite.Group()
     mainmenu = pygame.sprite.Group()
 
@@ -37,14 +36,12 @@ def game_loop():
     Asteroid.containers = (asteroids_enemy, updatable, drawable)
     AsteroidField.containers = (updatable,)
     Shot.containers = (shot, updatable, drawable)
-    Hud.containers = (hud, updatable, drawable)
-    StartScreen.containers = (mainmenu, updatable, drawable)
+
 
     player = Player(x, y)
-    mainmenu = StartScreen()
+    mainmenu2 = StartScreen().display()
     hud = Hud()
-    mainscreen = mainmenu.display()
-    start_screen = StartScreen()
+
 
 
     player_name = hud.get_player_name()  # Get player name from Hud
@@ -55,16 +52,13 @@ def game_loop():
     top_scores = load_best_scores()
     best_player_name, best_score = top_scores[0] if top_scores else ("No Player", 0)
 
-    if best_player_name == "Player": # to reset best player score
+    if best_player_name == "Player": # to reset the best player score
         best_score = 0
 
 
     while is_game_running:
         for updates in updatable:
             updates.update(dt)
-            top_scores = load_best_scores()
-
-
 
         for enemy in asteroids_enemy:
             for bullet in shot:
@@ -73,9 +67,9 @@ def game_loop():
                     enemy.split(particles)
                     score += 1
 
-                    if score > best_score: # for top 1. player with best score
-                        best_score = score
-                        best_player_name = player_name
+                if score > best_score: # for top 1. player with best score
+                    best_score = score
+                    best_player_name = player_name
 
             if enemy.check_collision(player) and not player.invincible:
                 enemy.kill()

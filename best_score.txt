@@ -1,5 +1,5 @@
-Victory: 37
-Sd: 4
+Vix: 38
+Max: 19
 Player: 0
 Player: 0
 Player: 0
