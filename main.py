@@ -50,6 +50,7 @@ def game_loop():
     player_name = hud.get_player_name()  # Get player name from Hud
     asteroidsfield = AsteroidField()
     is_game_running = True
+    pause_game = False
 
     top_scores = load_best_scores()
     best_player_name, best_score = top_scores[0] if top_scores else ("No Player", 0)
@@ -107,8 +108,10 @@ def game_loop():
                 return
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    if hud.pause_game(screen):
-                        return  #esc to main menu
+                    if not hud.pause_game(screen):
+                        clock.tick(0)        
+                    else:
+                        return
 
         pygame.display.flip()
         dt = clock.tick(60) / 1000

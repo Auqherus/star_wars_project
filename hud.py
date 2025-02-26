@@ -107,8 +107,7 @@ class Hud:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        paused = False
-                        return False
+                       paused = False
                     if event.key == pygame.K_DOWN:  # arrow down
                         self.selected_option = (self.selected_option + 1) % len(self.options)
                     elif event.key == pygame.K_UP:  # arrow up
@@ -122,7 +121,7 @@ class Hud:
                             pygame.quit()
                             sys.exit()
             
-            self.screen.blit(pause_text, pause_rect)
+            screen.blit(pause_text, pause_rect)
             pygame.display.flip()
             clock.tick(15)
 
