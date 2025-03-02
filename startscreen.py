@@ -68,6 +68,7 @@ class StartScreen:
         screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
         clock = pygame.time.Clock()
         font_title = pygame.font.SysFont('Arial', 40)
+        font_author = pygame.font.SysFont('Arial', 20)
         font = pygame.font.SysFont('Arial', 25)
 
         running = True
@@ -76,8 +77,11 @@ class StartScreen:
             screen.fill((1, 1, 1))
 
             title = font_title.render('Asteroids the Game', True, (255, 255, 255))
+            author = font_author.render('by Auqherus™', True, (255, 255, 255))
+            author_rect = author.get_rect(center=(SCREEN_WIDTH/1.2, SCREEN_HEIGHT/1.1))
             title_rect = title.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5))
             screen.blit(title, title_rect.topleft)
+            screen.blit(author, author_rect.bottomright)
 
             for i, option in enumerate(self.options):
                 color = (255, 255, 255) if i == self.selected_option else (150, 150, 150)

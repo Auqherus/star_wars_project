@@ -130,9 +130,9 @@ class Hud:
         blink_interval = 500
         last_toggle_time = pygame.time.get_ticks()
         show_text = True
-        game_over = False
+        time_to_close_death_screen = 7
 
-        while not game_over:
+        while time_to_close_death_screen > 0:
             self.screen.fill((1, 1, 1))  # screen clearance
 
             # Time update
@@ -142,9 +142,11 @@ class Hud:
             if current_time - last_toggle_time >= blink_interval:
                 show_text = not show_text
                 last_toggle_time = current_time
+                time_to_close_death_screen -= 1
 
             if show_text:
                 self.screen.blit(game_over_text, pause_rect)
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -152,7 +154,7 @@ class Hud:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        game_over = True
+                        time_to_close_death_screen = 0
                         return
 
             pygame.display.flip()
