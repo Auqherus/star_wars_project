@@ -3,7 +3,7 @@ import sys
 import pygame
 
 from hud import *
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, screen
 
 
 class StartScreen:
@@ -11,7 +11,6 @@ class StartScreen:
         self.font = pygame.font.SysFont('Arial', 20)
         self.options = ["Play", "Scores", "Exit"]
         self.selected_option = 0
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     def show_scores(self):
         """Showing best scores on the screen -- > Scores."""
@@ -21,23 +20,23 @@ class StartScreen:
         r_pressed_time = None  # Variable that counts how long is 'R' pressed
 
         while running:
-            self.screen.fill((0, 0, 0))  # Black screen
+            screen.fill((0, 0, 0))  # Black screen
             title = font.render("Top Scores", True, (255, 255, 255))
-            self.screen.blit(title, (SCREEN_WIDTH // 2 - 50, 50))
+            screen.blit(title, (SCREEN_WIDTH // 2 - 50, 50))
 
             # Drawing scores
             y_offset = 100
             for i, (name, score) in enumerate(top_scores):
                 score_text = font.render(f"{i + 1}. {name}: {score}", True, (255, 255, 255))
-                self.screen.blit(score_text, (SCREEN_WIDTH // 3, y_offset))
+                screen.blit(score_text, (SCREEN_WIDTH // 3, y_offset))
                 y_offset += 40
 
             back_text = font.render("Press ESC to go back", True, (200, 200, 200))
-            self.screen.blit(back_text, (SCREEN_WIDTH // 3, y_offset + 20))
+            screen.blit(back_text, (SCREEN_WIDTH // 3, y_offset + 20))
 
             # For reset scores
             reset_text = font.render("Hold 'R' for 3s to reset scores", True, (200, 50, 50))
-            self.screen.blit(reset_text, (SCREEN_WIDTH // 3, y_offset + 60))
+            screen.blit(reset_text, (SCREEN_WIDTH // 3, y_offset + 60))
 
             pygame.display.flip()
 
@@ -65,7 +64,6 @@ class StartScreen:
 
     def display(self):
         pygame.font.init()
-        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
         clock = pygame.time.Clock()
         font_title = pygame.font.SysFont('Arial', 40)
         font_author = pygame.font.SysFont('Arial', 20)

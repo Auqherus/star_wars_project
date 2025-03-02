@@ -2,12 +2,12 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from player import *
 from startscreen import *
-#import os
+from constants import screen
 import pygame
 
 pygame.init()
 #os.environ['SDL_VIDEO_CENTERED'] = '1'
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
 clock = pygame.time.Clock()
 def game_loop():
 

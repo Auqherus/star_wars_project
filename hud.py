@@ -1,6 +1,6 @@
 import sys
 import pygame
-from constants import TRIANGLE_SIZE, TRIANGLE_SPACING, BEST_SCORE, SCREEN_WIDTH, SCREEN_HEIGHT, GAME_STATUS_STOP
+from constants import TRIANGLE_SIZE, TRIANGLE_SPACING, SCREEN_WIDTH, SCREEN_HEIGHT, BEST_SCORE, screen
 
 
 def draw_lives(screen, lives):
@@ -54,7 +54,6 @@ def screen_settings():
 class Hud:
     def __init__(self):
         self.font = pygame.font.SysFont('Arial', 20)
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.options = ["main menu", "exit"]
         self.selected_option = 0
 
@@ -86,7 +85,7 @@ class Hud:
 
         while paused:
             
-            self.screen.fill((1, 1, 1))
+            screen.fill((1, 1, 1))
 
             # Render the menu options dynamically
             for i, option in enumerate(self.options):
@@ -133,7 +132,7 @@ class Hud:
         time_to_close_death_screen = 7
 
         while time_to_close_death_screen > 0:
-            self.screen.fill((1, 1, 1))  # screen clearance
+            screen.fill((1, 1, 1))  # screen clearance
 
             # Time update
             current_time = pygame.time.get_ticks()
@@ -145,7 +144,7 @@ class Hud:
                 time_to_close_death_screen -= 1
 
             if show_text:
-                self.screen.blit(game_over_text, pause_rect)
+                screen.blit(game_over_text, pause_rect)
 
 
             for event in pygame.event.get():
@@ -174,21 +173,21 @@ class Hud:
 
         running = True
         while running:
-            self.screen.fill((1, 1, 1))  # black
+            screen.fill((1, 1, 1))  # black
             txt_surface = font.render(text, True, color)  # Render the text
 
             # Set the width of the input box to fit the text
             width = max(200, txt_surface.get_width() + 10)
             input_box.w = width
-            self.screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Draw the text
-            pygame.draw.rect(self.screen, color, input_box, 2)  # Draw the rectangle around the input box
+            screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Draw the text
+            pygame.draw.rect(screen, color, input_box, 2)  # Draw the rectangle around the input box
 
             prompt = font.render('Enter your name:', True, (255, 255, 255))
-            self.screen.blit(prompt, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4))  # Draw prompt on the screen
+            screen.blit(prompt, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4))  # Draw prompt on the screen
 
             if error_message:  # If there's an error, display it
                 error_msg = font.render(error_message, True, (255, 0, 0))
-                self.screen.blit(error_msg, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 8))  # Draw error message
+                screen.blit(error_msg, (SCREEN_WIDTH / 4, SCREEN_HEIGHT / 8))  # Draw error message
 
 
             pygame.display.flip()  # Update the screen

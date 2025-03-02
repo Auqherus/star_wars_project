@@ -1,3 +1,6 @@
+import os
+import pygame
+
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
@@ -13,7 +16,8 @@ PLAYER_SHOOT_SPEED = 500
 PLAYER_SHOOT_COOLDOWN = 0.3
 TRIANGLE_SIZE = 20
 TRIANGLE_SPACING = 10
-BEST_SCORE = "best_score.txt"
+BEST_SCORE = os.path.join(os.environ["USERPROFILE"], "Documents", "best_scores.txt")
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
 
 #Game Status
 GAME_STATUS_STOP = False
