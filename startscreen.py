@@ -1,7 +1,3 @@
-import os
-import sys
-import pygame
-
 from hud import *
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, screen
 

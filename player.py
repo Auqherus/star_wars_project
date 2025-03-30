@@ -1,7 +1,3 @@
-import pygame
-
-from circleshape import *
-from constants import *
 from shot import *
 from particle import  *
 

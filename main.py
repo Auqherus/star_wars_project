@@ -6,7 +6,7 @@ from constants import screen
 import pygame
 
 pygame.init()
-#os.environ['SDL_VIDEO_CENTERED'] = '1'
+#os.environ['SDL_VIDEO_CENTERED'] = '1' // Obsolete
 
 clock = pygame.time.Clock()
 def game_loop():
