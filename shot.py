@@ -10,7 +10,8 @@ class Shot(CircleShape):
 
     def draw(self, screen):
         white = (255, 255, 255)
-        pygame.draw.circle(screen, white, self.position, self.radius, 2)
+        pygame.draw.circle(screen, white, self.position, self.radius, 2) # Draw a bullet - to change bullet radius, check constants
+        
 
     def update(self, dt):
         self.timer += dt  # Lifetime update
